@@ -1,59 +1,88 @@
+
 let rps= ['rock','paper','scissors']
 
 function getComputerChoice(){
       return  rps[Math.floor(Math.random()*rps.length)]
 }
-let computerScore=1;
-let playerScore=1;
-
+let computerScore=0;
+let playerScore=0;
+let tieScore=0;
 function playround(pc,cc){
   if(pc==="scissors" && cc==='paper' ||
   pc==='paper' && cc==='rock' || pc==='rock' && cc==='scissors'){
-    return `you won ${playerScore}`
+    playerScore++
+    displayScore.textContent= `you won ${playerScore}`
   }
   else if (cc==="scissors" && pc==='paper' ||
   cc==='paper' && pc==='rock' || cc==='rock' && pc==='scissors'){
-    return `computer won ${computerScore}`
+    computerScore++
+    displayComScore.textContent= `computer won ${computerScore}`
   }
   else if (pc===cc){
-    return 'tie'
+    tieScore++
+    tie.textContent= `tie ${tieScore}`
   }
-}
-function playerchoice(){
- let validatedInput=false;
- while (validatedInput==false) {
-  const choice = prompt("rock paper scissors");
-  if(choice==null){
-    continue;
-  }
-const choiceInLower = choice.toLocaleLowerCase();
-if(rps.includes(choiceInLower)){
-  validatedInput = true;
-  return choiceInLower;
-  }
- }
+ 
 }
 
 
-function game() {
-  for(let i=0;i<5;i++){
-    let pc=playerchoice()
-    let cc=getComputerChoice()
-    console.log(playround(pc,cc))
-    if(playround(pc,cc)==`you won ${playerScore}`){
-      playerScore++;
-    } else if (playround(pc,cc)== `computer won ${computerScore}`){
-      computerScore++;
+let pc;
+let cc;
+let pbutton= document.querySelector('.paper');
+let rbutton= document.querySelector('.rock');
+let sbutton= document.querySelector('.scissors');
+const buttons=document.querySelectorAll('button');
+let result;
+let tie=document.querySelector('.tie')
+
+
+pbutton.addEventListener('click', function(){
+ console.log(playround(pc='paper',cc=getComputerChoice()))
+})
+
+rbutton.addEventListener('click', function(){
+  console.log(playround(pc='rock',cc=getComputerChoice()))
+})
+
+sbutton.addEventListener('click', function(){
+  console.log(playround(pc='scissors',cc=getComputerChoice()))
+})
+
+
+
+  
+
+  
+const win=document.querySelector('.win')
+ buttons.forEach(function(button){
+  button.addEventListener('click', function(){
+    if(computerScore>4){
+      playerScore=0
+      computerScore=0
+      tieScore=0
+      win.textContent ='computer won the round'
+      } else if (playerScore>4){
+      computerScore=0
+      playerScore=0
+      tieScore=0
+      win.textContent= 'player won the round'
     }
-  }
-  console.log('game over')
-  if(playerScore>computerScore){
-    console.log('player has won the game')
-  } else if(computerScore>playerScore){
-    console.log('comuter has won the game')
-  } else {
-    console.log('we have a tie')
-  }
-}
+      
+  })
+  return result})
+ 
 
-game()
+ let displayScore= document.querySelector('.player')
+ let displayComScore=document.querySelector('.computer')
+
+ 
+
+
+  
+  
+
+
+
+
+
+
